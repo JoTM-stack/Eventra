@@ -2,6 +2,14 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 
+import crypto from 'crypto'
+
+import { generateTicketPdf }
+from '@/lib/pdf/generateTicketPdf'
+
+import { sendTicketEmail }
+from '@/lib/email/sendTicketEmail'
+
 interface Props {
   searchParams: Promise<{
     reference?: string
@@ -11,12 +19,20 @@ interface Props {
 export default async function VerifyPage({
   searchParams,
 }: Props) {
-  const { reference } = await searchParams
 
+  const { reference } =
+    await searchParams
+
+  //
+  // INVALID REFERENCE
+  //
   if (!reference) {
+
     return (
       <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
+
         <div className="text-center">
+
           <div className="text-2xl font-bold mb-2">
             Invalid payment reference
           </div>
@@ -27,12 +43,15 @@ export default async function VerifyPage({
           >
             Back to events
           </Link>
+
         </div>
+
       </div>
     )
   }
 
-  const supabase = await createClient()
+  const supabase =
+    await createClient()
 
   //
   // AUTH
@@ -52,14 +71,16 @@ export default async function VerifyPage({
     `https://api.paystack.co/transaction/verify/${reference}`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+        Authorization:
+          `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
       },
 
       cache: 'no-store',
     }
   )
 
-  const verifyData = await verifyRes.json()
+  const verifyData =
+    await verifyRes.json()
 
   //
   // PAYMENT FAILED
@@ -68,8 +89,10 @@ export default async function VerifyPage({
     !verifyData.status ||
     verifyData.data.status !== 'success'
   ) {
+
     return (
       <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
+
         <div className="text-center">
 
           <div className="text-2xl font-bold mb-2 text-red-500">
@@ -88,49 +111,60 @@ export default async function VerifyPage({
           </Link>
 
         </div>
+
       </div>
     )
   }
 
-  const metadata = verifyData.data.metadata
-  const event_id = metadata?.event_id
+  const metadata =
+    verifyData.data.metadata
+
+  const event_id =
+    metadata?.event_id
 
   //
   // CHECK EXISTING TRANSACTION
   //
-  const { data: existingTransaction } = await supabase
+  const {
+    data: existingTransaction,
+  } = await supabase
     .from('transactions')
     .select('id')
     .eq('reference', reference)
-    .single()
+    .maybeSingle()
 
   //
-  // ONLY PROCESS IF NOT ALREADY PROCESSED
+  // PROCESS ONLY ONCE
   //
   if (!existingTransaction) {
 
     //
-    // GET EVENT DETAILS
+    // GET EVENT
     //
-    const { data: eventData } = await supabase
-      .from('events')
-      .select(`
-        organizer_id,
-        price,
-        capacity,
-        tickets_sold,
-        max_tickets_per_user,
-        published
-      `)
-      .eq('id', event_id)
-      .single()
+    const { data: eventData } =
+      await supabase
+        .from('events')
+        .select(`
+          id,
+          name,
+          organizer_id,
+          price,
+          capacity,
+          tickets_sold,
+          max_tickets_per_user,
+          published
+        `)
+        .eq('id', event_id)
+        .single()
 
     //
     // EVENT NOT FOUND
     //
     if (!eventData) {
+
       return (
         <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
+
           <div className="text-center">
 
             <div className="text-2xl font-bold text-red-500 mb-3">
@@ -145,16 +179,19 @@ export default async function VerifyPage({
             </Link>
 
           </div>
+
         </div>
       )
     }
 
     //
-    // EVENT NOT LIVE
+    // EVENT UNAVAILABLE
     //
     if (!eventData.published) {
+
       return (
         <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
+
           <div className="text-center">
 
             <div className="text-2xl font-bold text-red-500 mb-3">
@@ -166,16 +203,18 @@ export default async function VerifyPage({
             </p>
 
           </div>
+
         </div>
       )
     }
 
     //
-    // SOLD OUT PROTECTION
+    // SOLD OUT
     //
     if (
       eventData.capacity &&
-      eventData.tickets_sold >= eventData.capacity
+      eventData.tickets_sold >=
+      eventData.capacity
     ) {
 
       await supabase
@@ -187,6 +226,7 @@ export default async function VerifyPage({
 
       return (
         <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
+
           <div className="text-center">
 
             <div className="text-2xl font-bold text-red-500 mb-3">
@@ -205,6 +245,7 @@ export default async function VerifyPage({
             </Link>
 
           </div>
+
         </div>
       )
     }
@@ -212,21 +253,24 @@ export default async function VerifyPage({
     //
     // MAX TICKETS PER USER
     //
-    const { count } = await supabase
-      .from('tickets')
-      .select('*', {
-        count: 'exact',
-        head: true,
-      })
-      .eq('event_id', event_id)
-      .eq('user_id', user.id)
+    const { count } =
+      await supabase
+        .from('tickets')
+        .select('*', {
+          count: 'exact',
+          head: true,
+        })
+        .eq('event_id', event_id)
+        .eq('user_id', user.id)
 
     if (
       (count ?? 0) >=
       (eventData.max_tickets_per_user ?? 5)
     ) {
+
       return (
         <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
+
           <div className="text-center">
 
             <div className="text-2xl font-bold text-red-500 mb-3">
@@ -245,6 +289,7 @@ export default async function VerifyPage({
             </Link>
 
           </div>
+
         </div>
       )
     }
@@ -256,13 +301,15 @@ export default async function VerifyPage({
       .from('transactions')
       .insert({
         reference,
-        amount: verifyData.data.amount / 100,
-        status: verifyData.data.status,
+        amount:
+          verifyData.data.amount / 100,
+        status:
+          verifyData.data.status,
         event_id,
       })
 
     //
-    // UPDATE TICKETS SOLD
+    // UPDATE SOLD COUNT
     //
     await supabase
       .from('events')
@@ -275,30 +322,86 @@ export default async function VerifyPage({
     //
     // CREATE TICKET
     //
-    const { data: insertedTicket, error: ticketError } =
-      await supabase
-        .from('tickets')
-        .insert({
-          event_id,
-          user_id: user.id,
-          organizer_id: eventData.organizer_id,
-          payment_reference: reference,
-          amount: eventData.price ?? 0,
-          status: 'paid',
-        })
-        .select()
+    const {
+      data: insertedTicket,
+      error: ticketError,
+    } = await supabase
+      .from('tickets')
+      .insert({
+        event_id,
+        user_id: user.id,
+        organizer_id:
+          eventData.organizer_id,
+        payment_reference:
+          reference,
+        amount:
+          eventData.price ?? 0,
+        status: 'paid',
 
-    console.log('INSERTED TICKET:', insertedTicket)
-    console.log('TICKET ERROR:', ticketError)
-    const pdfBuffer = await generateTicketPdf({
-                      ticketCode,
-                      eventName,
-                      email,
-                      amount,
-                      status,
-                    })
+        ticket_code:
+          'EVT-' +
+          crypto
+            .randomBytes(6)
+            .toString('base64')
+            .replace(/[^a-zA-Z0-9]/g, '')
+            .substring(0, 11),
+      })
+      .select()
+
+    console.log(
+      'INSERTED TICKET:',
+      insertedTicket
+    )
+
+    console.log(
+      'TICKET ERROR:',
+      ticketError
+    )
+
     //
-    // AUTO CLOSE SALES IF FULL
+    // SEND EMAIL
+    //
+    if (insertedTicket?.[0]) {
+
+      const ticket =
+        insertedTicket[0]
+
+      const pdfBuffer =
+        await generateTicketPdf({
+
+          ticketCode:
+            ticket.ticket_code,
+
+          eventName:
+            eventData.name,
+
+          email:
+            user.email ?? '',
+
+          amount:
+            eventData.price ?? 0,
+
+          status:
+            'PAID',
+        })
+
+      await sendTicketEmail({
+
+        to:
+          user.email ?? '',
+
+        eventName:
+          eventData.name,
+
+        ticketCode:
+          ticket.ticket_code,
+
+        pdfBuffer,
+      })
+    }
+
+    //
+    // AUTO CLOSE EVENT
     //
     const newTotal =
       (eventData.tickets_sold ?? 0) + 1
@@ -307,6 +410,7 @@ export default async function VerifyPage({
       eventData.capacity &&
       newTotal >= eventData.capacity
     ) {
+
       await supabase
         .from('events')
         .update({
@@ -320,6 +424,7 @@ export default async function VerifyPage({
   // SUCCESS PAGE
   //
   return (
+
     <div className="max-w-md mx-auto min-h-screen flex items-center justify-center px-5">
 
       <div className="w-full border border-gray-100 rounded-3xl p-6 text-center">
