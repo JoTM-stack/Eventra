@@ -134,9 +134,9 @@ if (user) {
                     >
 
                         {/* BANNER */}
-                      {event.banner_url && (
+                      {event.cover_image_url && (
                         <img
-                          src={event.banner_url}
+                          src={event.cover_image_url}
                           alt={event.name}
                           className="w-full h-40 object-cover"
                         />
