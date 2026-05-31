@@ -3,22 +3,23 @@ import Link from 'next/link'
 import { formatDateShort, formatPrice, EVENT_CATEGORIES } from '@/lib/utils'
 import type { Event } from '@/lib/supabase/types'
 import SignOutButton from '@/app/components/SignOutButton'
-import SavedPage from '@/app/saved/SavedPage'
 import BottomNav from '@/components/navigation/BottomNav'
 import BottomHNav from '@/components/navigation/BottomHNav'
 
 
 
 interface Props {
-  searchParams: Promise<{ slug: string }>
+  searchParams: Promise<{
+    category?: string
+    q?: string
+  }>
 }
 
 export default async function BrowsePage({
-    searchParams,
-        }: {
-          searchParams: { category?: string; q?: string }
-        }) {
-          const sp = await searchParams
+  searchParams,
+}: Props) {
+
+  const sp = await searchParams
 
   const supabase = await createClient()
   const {
