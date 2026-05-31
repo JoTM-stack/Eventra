@@ -5,7 +5,7 @@ import { formatDateShort, formatPrice } from '@/lib/utils'
 import type { Event, Profile } from '@/lib/supabase/types'
 import BasketButton from '@/components/BasketButton'
 import BottomNav from '@/components/navigation/BottomNav'
-import tickets from '@/tickets'
+
 
 async function getData() {
   const supabase = await createClient()
