@@ -1,9 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { generateTicketPdf }
-from '@/lib/pdf/generateTicketPdf'
-import { sendTicketEmail }
-from '@/lib/email/sendTicketEmail'
+import { generateTicketPdf } from '@/lib/pdf/generateTicketPdf'
+import { sendTicketEmail } from '@/lib/email/sendTicketEmail'
 
 import crypto from 'crypto'
 
