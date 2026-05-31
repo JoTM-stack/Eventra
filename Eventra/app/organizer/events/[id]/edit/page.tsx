@@ -30,9 +30,9 @@ export default function EditEventPage() {
       .eq('id', id)
       .single()
 
-        if (response.data) {
-          setEvent(response.data)
-          setForm(response.data)
+        if (data) {
+          setEvent(data)
+          setForm(data)
         }
         setLoading(false)
       
