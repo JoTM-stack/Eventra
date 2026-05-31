@@ -141,7 +141,7 @@ if (profile?.role === 'organizer') {
         </p>
 
         <div className="flex flex-col gap-3">
-          <button
+          <Link
               href={
                 role === 'organizer'
                   ? '/organizer/events/create'
@@ -155,7 +155,7 @@ if (profile?.role === 'organizer') {
             "
           >
             Start selling tickets
-          </button>
+          </Link>
 
           <Link
             href="/browse"
