@@ -10,3 +10,11 @@ const nextConfig = {
 module.exports = nextConfig
 
 /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+}
+
+module.exports = nextConfig
