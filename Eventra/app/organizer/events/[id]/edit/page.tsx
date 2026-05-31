@@ -29,13 +29,13 @@ export default function EditEventPage() {
       .select('*')
       .eq('id', id)
       .single()
-      .then(({ data }) => {
-        if (data) {
-          setEvent(data)
-          setForm(data)
+
+        if (response.data) {
+          setEvent(response.data)
+          setForm(response.data)
         }
         setLoading(false)
-      })
+      
   }, [id])
 
   function set(field: keyof Event, value: string | number | boolean | null) {
