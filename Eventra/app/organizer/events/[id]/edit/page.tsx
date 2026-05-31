@@ -19,24 +19,34 @@ export default function EditEventPage() {
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    if (!id) return
+useEffect(() => {
+  if (!id) return
 
+  const fetchEvent = async () => {
     const supabase = createClient()
 
-    supabase
+    const { data, error } = await supabase
       .from('events')
       .select('*')
       .eq('id', id)
       .single()
 
-        if (data) {
-          setEvent(data)
-          setForm(data)
-        }
-        setLoading(false)
-      
-  }, [id])
+    if (error) {
+      console.error(error)
+      setLoading(false)
+      return
+    }
+
+    if (data) {
+      setEvent(data)
+      setForm(data)
+    }
+
+    setLoading(false)
+  }
+
+  fetchEvent()
+}, [id])
 
   function set(field: keyof Event, value: string | number | boolean | null) {
     setForm(prev => ({ ...prev, [field]: value }))
