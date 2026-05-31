@@ -48,10 +48,14 @@ function EventRow({
   const { month, day } = formatDateShort(event.date)
   const sold = event.tickets?.length ?? 0
   const isExpired = (() => {
-  const expiryTime = new Date(event.date)
+     if (!event.date) return false
+    
+  const expiryTime = new Date(event.date ?? new Date())
 
   // event expires 8h after start time
-  expiryTime.setHours(expiryTime.getHours() + 0.00138889)
+  expiryTime.setHours(
+    expiryTime.getHours() + 0.00138889
+  )
 
   return expiryTime < new Date()
 })()
