@@ -33,7 +33,10 @@ async function getData() {
 
   return {
     profile: profileRes.data as Profile,
-    events: (eventsRes.data ?? []) as Event[],
+    
+    events: (eventsRes.data ?? []) as (Event & {
+    tickets?: { id: string }[]
+  })[],
   }
 }
 
@@ -54,7 +57,7 @@ function EventRow({
 
   // event expires 8h after start time
   expiryTime.setHours(
-    expiryTime.getHours() + 0.00138889
+    expiryTime.getHours() + 8
   )
 
   return expiryTime < new Date()
@@ -126,17 +129,17 @@ const totalRevenue = events.reduce(
 const now = new Date()
 
 const liveEvents = events.filter(event => {
-  const expiryTime = new Date(event.date)
-  expiryTime.setHours(expiryTime.getHours() + 0.00138889)
+  const expiryTime = new Date(event.date ?? new Date())
+  expiryTime.setHours(expiryTime.getHours() + 8)
 
   return expiryTime >= now
 })
 
 const expiredEvents = events.filter(event => {
-  const expiryTime = new Date(event.date)
+  const expiryTime = new Date(event.date ?? new Date())
 
   // expire 8 hours after event starts
-  expiryTime.setHours(expiryTime.getHours() + 0.00138889)
+  expiryTime.setHours(expiryTime.getHours() + 8)
 
   return expiryTime < now
 })
