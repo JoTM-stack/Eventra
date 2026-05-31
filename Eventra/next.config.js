@@ -4,17 +4,11 @@ const nextConfig = {
     domains: ['images.unsplash.com'],
   },
 
-  allowedDevOrigins: ['rancidity-blighted-acquire.ngrok-free.dev'],
-}
-
-module.exports = nextConfig
-
-/** @type {import('next').NextConfig} */
-/** @type {import('next').NextConfig} */
-const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  allowedDevOrigins: ['rancidity-blighted-acquire.ngrok-free.dev'],
 }
 
 module.exports = nextConfig
