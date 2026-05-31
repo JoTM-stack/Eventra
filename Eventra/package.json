@@ -9,18 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.10.2",
-    "@supabase/supabase-js": "^2.103.0",
-    "clsx": "^2.1.1",
-    "date-fns": "^4.1.0",
-    "lucide-react": "^0.511.0",
-    "next": "^15.3.5",
-    "react": "^19",
-    "react-dom": "^19",
-    "react-qr-code": "^2.0.21",
-    "slugify": "^1.6.6",
-    "stripe": "^22.0.1"
-  },
+  "@supabase/ssr": "^0.10.2",
+  "@supabase/supabase-js": "^2.103.0",
+  "@yudiel/react-qr-scanner": "^2.2.1",
+  "clsx": "^2.1.1",
+  "date-fns": "^4.1.0",
+  "jspdf": "^3.0.1",
+  "lucide-react": "^0.511.0",
+  "next": "^15.3.5",
+  "react": "^19",
+  "react-dom": "^19",
+  "react-qr-code": "^2.0.21",
+  "resend": "^4.6.0",
+  "slugify": "^1.6.6",
+  "stripe": "^22.0.1"
+},
   "devDependencies": {
     "@types/node": "^22",
     "@types/react": "^19",
