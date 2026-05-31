@@ -5,7 +5,7 @@ import BottomHNav from '@/components/navigation/BottomHNav'
 import { formatDateShort, formatPrice } from '@/lib/utils'
 import type { Event } from '@/lib/supabase/types'
 import SignOutButton from '@/app/components/SignOutButton'
-import tickets from '@/tickets'
+import tickets from '@/app/tickets/[id]'
 
 
 
