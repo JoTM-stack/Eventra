@@ -26,6 +26,7 @@ interface FormData {
 const EMPTY: FormData = {
   name: '', description: '', date: '', time: '', venue: '', category: '',
   ticket_name: 'General Admission', ticket_desc: '', price: '0', capacity: '',  banner_url: '',
+  published: false,
 }
 
 export default function CreateEventPage() {
