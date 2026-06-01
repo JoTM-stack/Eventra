@@ -5,9 +5,10 @@ import { useState } from 'react'
 interface Props {
   url: string
   title: string
+  className?: string
 }
 
-export default function ShareButton({ url, title }: Props) {
+export default function ShareButton({ url, title, className = '', }: Props) {
   const [copied, setCopied] = useState(false)
 
   async function share() {
