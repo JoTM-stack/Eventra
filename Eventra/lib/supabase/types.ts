@@ -40,7 +40,7 @@ export interface Database {
           price: number
           capacity: number | null
           tickets_sold: number
-          stripe_payment_link: string | null
+          paystack_payment_link: string | null
           published: boolean
           created_at: string
           updated_at: string
@@ -55,7 +55,7 @@ export interface Database {
           attendee_id: string | null
           attendee_email: string
           attendee_name: string | null
-          stripe_session_id: string | null
+          paystack_session_id: string | null
           status: 'pending' | 'confirmed' | 'cancelled'
           created_at: string
         }
