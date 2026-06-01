@@ -53,7 +53,7 @@ useEffect(() => {
   }
 
   async function save(publish?: boolean) {
-    if (!id) return
+    if (!id || !event) return
 
     setSaving(true)
     setError('')
