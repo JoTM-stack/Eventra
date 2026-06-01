@@ -152,10 +152,14 @@ export default async function SavedPage() {
       </div>
 
       {/* Bottom nav */}
+    
+      const navItems = [
+        { href: '/browse', label: 'Browse' },
+        { href: '/saved', label: 'Saved' },
+      ]
+      
       <div className="border-t border-gray-100 flex bg-white sticky bottom-0">
-        {[
-
-        ].map(item => (
+        {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
