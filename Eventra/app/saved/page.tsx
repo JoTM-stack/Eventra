@@ -47,6 +47,12 @@ export default async function SavedPage() {
       ?.map(item => item.events)
       .filter(Boolean) ?? []
 
+  
+const navItems = [
+  { href: '/browse', label: 'Browse' },
+  { href: '/saved', label: 'Saved' },
+]
+
   return (
     <div className="max-w-md mx-auto min-h-screen flex flex-col bg-white">
       {/* Nav */}
@@ -152,11 +158,6 @@ export default async function SavedPage() {
       </div>
 
       {/* Bottom nav */}
-    
-      const navItems = [
-        { href: '/browse', label: 'Browse' },
-        { href: '/saved', label: 'Saved' },
-      ]
       
       <div className="border-t border-gray-100 flex bg-white sticky bottom-0">
         {navItems.map((item) => (
