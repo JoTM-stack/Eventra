@@ -38,15 +38,15 @@ export async function middleware(req: NextRequest) {
     }
   )
 
+  await supabase.auth.getUser()
+
+  return response
+}
+
   export const config = {
   matcher: [
     '/organizer/:path*',
     '/tickets/:path*',
     '/saved',
   ],
-}
-
-  await supabase.auth.getUser()
-
-  return response
 }
