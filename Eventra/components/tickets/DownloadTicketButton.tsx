@@ -29,7 +29,7 @@ export default function DownloadTicketButton({
   //
   // COLORS
   //
-  const purple = [111, 66, 193]
+  const purple: [number, number, number] = [111, 66, 193]
 
   //
   // BACKGROUND
