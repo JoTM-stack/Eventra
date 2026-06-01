@@ -327,7 +327,7 @@ export default async function TicketDetailsPage({
             />
 
             <ShareButton
-             className=""
+             
               url={`${process.env.NEXT_PUBLIC_APP_URL}/tickets/${ticket.ticket_code}`}
               title={`My ticket for ${ticket.events?.name ?? 'Eventra Event'}`}
             />
