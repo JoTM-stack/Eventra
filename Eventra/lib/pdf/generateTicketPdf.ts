@@ -23,7 +23,7 @@ export async function generateTicketPdf({
     format: [180, 210],
   })
 
-  const purple = [111, 66, 193]
+  const purple: [number, number, number] = [111, 66, 193]
 
   doc.setFillColor(250, 250, 250)
   doc.rect(0, 0, 210, 148, 'F')
