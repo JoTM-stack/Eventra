@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { formatDateShort, formatPrice } from '@/lib/utils'
 import type { Event } from '@/lib/supabase/types'
-import tickets from '@/tickets'
+
 
 async function getPublishedEvents(): Promise<Event[]> {
   const supabase = await createClient()
