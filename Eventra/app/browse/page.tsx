@@ -130,7 +130,7 @@ if (user) {
                <Link
                       key={event.id}
                       href={`/events/${event.slug}`}
-                      className="overflow-hidden border border-gray-100 rounded-2xl hover:border-brand transition-colors bg-gray"
+                      className="overflow-hidden border border-gray-100 rounded-2xl hover:border-brand transition-colors"
                     >
 
                         {/* BANNER */}
