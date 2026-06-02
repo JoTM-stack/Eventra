@@ -65,7 +65,7 @@ if (user) {
     <div className="max-w-md mx-auto min-h-screen flex flex-col">
       <nav className="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
 
-        <a href="/" className="font-display font-bold text-xl text-brand">eventra</a>
+        <a href="/home" className="font-display font-bold text-xl text-brand">eventra</a>
 
         {user ? (
               <SignOutButton />
