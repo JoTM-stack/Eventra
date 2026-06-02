@@ -3,23 +3,22 @@ import Link from 'next/link'
 import { formatDateShort, formatPrice, EVENT_CATEGORIES } from '@/lib/utils'
 import type { Event } from '@/lib/supabase/types'
 import SignOutButton from '@/app/components/SignOutButton'
+import SavedPage from '@/app/saved/SavedPage'
 import BottomNav from '@/components/navigation/BottomNav'
 import BottomHNav from '@/components/navigation/BottomHNav'
 
 
 
 interface Props {
-  searchParams: Promise<{
-    category?: string
-    q?: string
-  }>
+  searchParams: Promise<{ slug: string }>
 }
 
 export default async function BrowsePage({
-  searchParams,
-}: Props) {
-
-  const sp = await searchParams
+    searchParams,
+        }: {
+          searchParams: { category?: string; q?: string }
+        }) {
+          const sp = await searchParams
 
   const supabase = await createClient()
   const {
@@ -65,7 +64,7 @@ if (user) {
     <div className="max-w-md mx-auto min-h-screen flex flex-col">
       <nav className="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
 
-        <a className="font-display font-bold text-xl text-brand">eventra</a>
+        <a href="/" className="font-display font-bold text-xl text-brand">eventra</a>
 
         {user ? (
               <SignOutButton />
@@ -130,58 +129,39 @@ if (user) {
                <Link
                       key={event.id}
                       href={`/events/${event.slug}`}
-                      className="overflow-hidden border border-gray-100 rounded-2xl hover:border-brand transition-colors bg-gray"
+                      className="overflow-hidden border border-gray-100 rounded-2xl hover:border-brand transition-colors bg-white"
                     >
 
                         {/* BANNER */}
-                      {event.cover_image_url && (
+                      {event.banner_url && (
                         <img
-                          src={event.cover_image_url}
+                          src={event.banner_url}
                           alt={event.name}
                           className="w-full h-40 object-cover"
                         />
                       )}
 
-                <div className="flex items-center gap-3 p-3">
+                  <div className="min-w-[44px] text-center bg-brand-soft rounded-lg py-1.5 px-1 shrink-0">
+                    <div className="text-[9px] font-bold text-brand uppercase tracking-wide">{month}</div>
+                    <div className="text-xl font-bold text-brand-dark leading-tight">{day}</div>
+                  </div>
+                  <div className="flex-1 min-w-0 py-2 px-2">
+                    <div className="text-sm font-medium truncate">{event.name}</div>
+                    <div className="text-xs text-gray-400 truncate">{event.venue ?? 'Venue TBC'}{event.category ? ` · ${event.category}` : ''}</div>
+                  </div>
+                  <div className="shrink-0 text-right py-1 px-2 ">
+                    <div className="text-sm font-bold text-brand">{formatPrice(event.price)}</div>
+                    {event.capacity && (
+                      <div className="text-xs text-gray-400">
+                        {Math.max(
+                          event.capacity -
+                          ((event as any).tickets?.length || 0),
+                          0
+                        )} left
+                      </div>
+                    )}
 
-  <div className="min-w-[44px] text-center bg-brand-soft rounded-lg py-1.5 px-1 shrink-0">
-    <div className="text-[9px] font-bold text-brand uppercase tracking-wide">
-      {month}
-    </div>
-
-    <div className="text-xl font-bold text-brand-dark leading-tight">
-      {day}
-    </div>
-  </div>
-
-  <div className="flex-1 min-w-0">
-    <div className="text-sm font-medium truncate">
-      {event.name}
-    </div>
-
-    <div className="text-xs text-gray-400 truncate">
-      {event.venue ?? 'Venue TBC'}
-      {event.category ? ` · ${event.category}` : ''}
-    </div>
-  </div>
-
-  <div className="shrink-0 text-right">
-    <div className="text-sm font-bold text-brand">
-      {formatPrice(event.price)}
-    </div>
-
-    {event.capacity && (
-      <div className="text-xs text-gray-400">
-        {Math.max(
-          event.capacity -
-          ((event as any).tickets?.length || 0),
-          0
-        )} left
-      </div>
-    )}
-  </div>
-
-</div>
+                  </div>
                 </Link>
 
               )
