@@ -3,22 +3,23 @@ import Link from 'next/link'
 import { formatDateShort, formatPrice, EVENT_CATEGORIES } from '@/lib/utils'
 import type { Event } from '@/lib/supabase/types'
 import SignOutButton from '@/app/components/SignOutButton'
-import SavedPage from '@/app/saved/SavedPage'
 import BottomNav from '@/components/navigation/BottomNav'
 import BottomHNav from '@/components/navigation/BottomHNav'
 
 
 
 interface Props {
-  searchParams: Promise<{ slug: string }>
+  searchParams: Promise<{
+    category?: string
+    q?: string
+  }>
 }
 
 export default async function BrowsePage({
-    searchParams,
-        }: {
-          searchParams: { category?: string; q?: string }
-        }) {
-          const sp = await searchParams
+  searchParams,
+}: Props) {
+
+  const sp = await searchParams
 
   const supabase = await createClient()
   const {
@@ -64,7 +65,7 @@ if (user) {
     <div className="max-w-md mx-auto min-h-screen flex flex-col">
       <nav className="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
 
-        <a href="/" className="font-display font-bold text-xl text-brand">eventra</a>
+        <a className="font-display font-bold text-xl text-brand">eventra</a>
 
         {user ? (
               <SignOutButton />
@@ -129,13 +130,13 @@ if (user) {
                <Link
                       key={event.id}
                       href={`/events/${event.slug}`}
-                      className="overflow-hidden border border-gray-100 rounded-2xl hover:border-brand transition-colors bg-white"
+                      className="overflow-hidden border border-gray-100 rounded-2xl hover:border-brand transition-colors bg-gray"
                     >
 
                         {/* BANNER */}
-                      {event.banner_url && (
+                      {event.cover_image_url && (
                         <img
-                          src={event.banner_url}
+                          src={event.cover_image_url}
                           alt={event.name}
                           className="w-full h-40 object-cover"
                         />
@@ -172,7 +173,6 @@ if (user) {
 
           </div>
         )}
-
                     {
           role === 'organizer'
             ? <BottomNav />
