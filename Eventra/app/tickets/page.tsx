@@ -43,6 +43,57 @@ export default async function TicketsPage() {
       </h1>
     </div>
 
+    {/* TICKET FILTER NAV */}
+<div
+  className="
+    flex gap-3 overflow-x-auto
+    no-scrollbar
+    pb-2 mb-6
+  "
+>
+
+  <button
+    className="
+      whitespace-nowrap
+      px-5 py-2.5
+      rounded-full
+      bg-brand text-white
+      text-sm font-semibold
+    "
+  >
+    All Tickets
+  </button>
+
+  <button
+    className="
+      whitespace-nowrap
+      px-5 py-2.5
+      rounded-full
+      border border-gray-200
+      bg-white
+      text-gray-600
+      text-sm font-medium
+    "
+  >
+    Checked In
+  </button>
+
+  <button
+    className="
+      whitespace-nowrap
+      px-5 py-2.5
+      rounded-full
+      border border-gray-200
+      bg-white
+      text-gray-600
+      text-sm font-medium
+    "
+  >
+    Unchecked + Expired
+  </button>
+
+</div>
+
     {/* EMPTY STATE */}
     {tickets?.length === 0 && (
       <div
