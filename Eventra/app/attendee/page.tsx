@@ -205,7 +205,7 @@ if (profile?.role === 'organizer') {
           <div
             className="
               absolute inset-0
-              rounded-full
+              
               animate-spin-slow
             "
           >
