@@ -194,69 +194,68 @@ if (profile?.role === 'organizer') {
         ))}
     </div>
 
- <div className= "h-10"/>
-         {/*import tickets from '@/tickets'*/}
-      <Link
-          href="/tickets"
-          className="flex flex-col items-center justify-center relative w-28 h-28"
+<div className="h-10" />
+
+<div className="flex justify-center">
+  <Link
+    href="/tickets"
+    className="flex flex-col items-center justify-center relative w-28 h-28"
+  >
+
+    {/* CURVED TEXT */}
+    <div
+      className="
+        absolute inset-0
+        animate-spin-slow
+      "
+    >
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+
+        <path
+          id="circlePath"
+          d="
+            M 50,50
+            m -38,0
+            a 38,38 0 1,1 76,0
+            a 38,38 0 1,1 -76,0
+          "
+          fill="none"
+        />
+
+        <text
+          fill="black"
+          fontSize="9"
+          fontWeight="600"
+          letterSpacing="2"
         >
-
-          {/* CURVED TEXT */}
-          <div
-            className="
-              absolute inset-0
-              
-              animate-spin-slow
-            "
+          <textPath
+            href="#circlePath"
+            startOffset="30%"
+            textAnchor="middle"
           >
+            ••••••••••••••••••••••• MY TICKETS ••••••••••••••••••••••••••••
+          </textPath>
+        </text>
 
-            <svg viewBox="0 0 100 100" className="w-full h-full">
+      </svg>
+    </div>
 
-              <path
-                id="circlePath"
-                d="
-                  M 50,50
-                  m -38,0
-                  a 38,38 0 1,1 76,0
-                  a 38,38 0 1,1 -76,0
-                "
-                fill="none"
-              />
+    {/* CENTER ICON */}
+    <div
+      className="
+        w-16 h-16
+        rounded-full
+        bg-black
+        flex items-center justify-center
+        text-white text-3xl
+        z-10
+      "
+    >
+      🎫
+    </div>
 
-              <text
-                fill="black"
-                fontSize="9"
-                fontWeight="600"
-                letterSpacing="2"
-              >
-                <textPath
-                  href="#circlePath"
-                  startOffset="30%"
-                  textAnchor="middle"
-                >
-                  ••••••••••••••••••••••• MY TICKETS ••••••••••••••••••••••••••••
-                </textPath>
-              </text>
-
-            </svg>
-
-          </div>
-
-          {/* CENTER ICON */}
-          <div
-            className="
-              w-16 h-16
-              rounded-full
-              bg-black
-              flex items-center justify-center
-              text-white text-3xl
-              z-10
-            "
-          >
-            🎫
-          </div>
-
-        </Link>
+  </Link>
+</div>
 
 
       {/* Events */}
