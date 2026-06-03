@@ -61,7 +61,7 @@ export default async function TicketsPage() {
       text-sm font-semibold
     "
   >
-    All Tickets
+    Active Tickets
   </button>
 
   <button
@@ -75,7 +75,7 @@ export default async function TicketsPage() {
       text-sm font-medium
     "
   >
-    Checked In
+    Used Tickets
   </button>
 
   <button
@@ -89,7 +89,7 @@ export default async function TicketsPage() {
       text-sm font-medium
     "
   >
-    Unchecked + Expired
+    Expired
   </button>
 
 </div>
