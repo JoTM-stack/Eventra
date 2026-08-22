@@ -734,8 +734,6 @@ Potential improvements include:
 
 * Multiple ticket types
 * Event search and filtering
-* QR-code ticket validation
-* Ticket scanning
 * Email notifications
 * Refund processing
 * Advanced organizer analytics
@@ -769,27 +767,5 @@ Key areas explored include:
 
 One of the most important lessons was that integrating an external service such as a payment gateway requires more than simply calling an API. The application must maintain its own transaction state and independently verify external events before performing sensitive operations such as ticket fulfillment.
 
----
-
-# License
-
-This project is intended primarily as a portfolio and learning project.
-
-Add the appropriate license here if the repository is intended to be distributed or reused.
-
----
-
-## Author
-
-**JAY M**
-
-Computer Engineering | Software Development
-
-Interested in:
-
-* Software Engineering
-* Backend Development
-* APIs
-* Databases
-* Cloud Applications
-* Data Engineering
+# Note:
+Eventra is a portfolio project and is not currently intended for public production use. The deployment instructions are provided to demonstrate the project's deployment architecture and configuration.
