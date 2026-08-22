@@ -741,7 +741,6 @@ Potential improvements include:
 * Payment provider abstraction
 * Additional payment gateways
 * Automated testing
-* Rate limiting
 * Background job processing
 * More comprehensive audit logging
 
